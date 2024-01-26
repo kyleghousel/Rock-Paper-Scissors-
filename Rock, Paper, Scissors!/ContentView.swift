@@ -14,7 +14,9 @@ struct ContentView: View {
     @State private var appChoice = ""
     @State private var playerChoice = ""
     
-    @State private var score = 0
+    @State private var playerScore = 0
+    @State private var appScore = 0
+
     @State private var outcome = ""
     
     
@@ -50,16 +52,27 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                Text("\(outcome)")
-                    .font(.title3.bold())
-                    .foregroundColor(.white)
+                VStack {
+                    HStack {
+                        //add visual of playerChoice vs appChoice?
+                    }
+                    Text("\(outcome)")
+                        .font(.title3.bold())
+                        .foregroundColor(.white)
+                    
+                }
                 Spacer()
                 Spacer()
                 
                 HStack(spacing: 100) {
-                    Text("Score: \(score)")
-                        .font(.title.bold())
-                        .foregroundStyle(.white)
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Player Score: \(playerScore)")
+                            .font(.title2.bold())
+                            .foregroundStyle(.white)
+                        Text("App Score: \(appScore)")
+                            .font(.title2.bold())
+                            .foregroundStyle(.white)
+                    }
                     
                     Button {
                         resetGame()
@@ -103,18 +116,19 @@ struct ContentView: View {
         let appMove: String = getAppChoice(array: plays)
 
         if ((playerMove == "rock" && appMove == "scissors") || (playerMove == "paper" && appMove == "rock") || (playerMove == "scissors" && appMove == "paper")) {
-            score += 1
+            playerScore += 1
             outcome = "\(playerMove.capitalized) beats \(appMove)!"
         } else if (playerMove == appMove) {
             outcome = "You tied!"
         } else {
-            score -= 1
+            appScore += 1
             outcome = "\(appMove.capitalized) beats \(playerMove)!"
         }
     }
     
     func resetGame() {
-        score = 0
+        playerScore = 0
+        appScore = 0
         outcome = "New game!"
     }
 
